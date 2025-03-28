@@ -1,0 +1,5 @@
+Letter count: 496
+Word count: 88
+Sentence count: 11
+Average letters per word: 5.6
+Average words per sentence: 8.0

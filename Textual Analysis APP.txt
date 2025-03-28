@@ -1,0 +1,59 @@
+package my_project;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class MyClass {
+    public static void main(String[] args) throws FileNotFoundException {
+
+		String fileName = "E:/New Stuff/School Files/12th Grade/Semester 2/Java/Projects/MathiasLaven-Week9Projects/Textual Analysis File.txt";
+		File textFile = new File(fileName);
+		Scanner fileInput = new Scanner(textFile);
+		
+		String line;
+		
+		int letterCount = 0;
+		int wordCount = 1; //avoiding off-by-one errors (for instance, "John walks his dog" has three spaces but four words)
+		int sentenceCount = 0;
+		
+		//https://stackoverflow.com/questions/7866320/how-to-match-letters-only-using-java-regex-matches-method
+		//modified heavily, i just needed to know the basic syntax
+		String letterRegex = "[a-zA-Z]";
+		String spaceRegex = "[ ]";
+		String punctuationRegex = "[.?!]";
+		
+		//initialized early because i assume it's better to do that?
+		String lineWithoutLetters;
+		String lineWithoutSpaces;
+		String lineWithoutPunctuation;
+		
+		while (fileInput.hasNextLine()) {
+			line = fileInput.nextLine().trim();
+			
+			//detect each by getting versions of the line without them
+			lineWithoutLetters = line.replaceAll(letterRegex, "");
+			letterCount += line.length() - lineWithoutLetters.length();
+			
+			lineWithoutSpaces = line.replaceAll(spaceRegex, "");
+			wordCount += line.length() - lineWithoutSpaces.length();
+			
+			lineWithoutPunctuation = line.replaceAll(punctuationRegex, "");
+			sentenceCount += line.length() - lineWithoutPunctuation.length();
+			
+		}
+		
+		//simple calculations
+		double lettersPerWord = (double)letterCount / (double)wordCount;
+		double wordsPerSentence = (double)wordCount / (double)sentenceCount;
+		
+		//output
+		System.out.format("Letter count: %d\n", letterCount);
+		System.out.format("Word count: %d\n", wordCount);
+		System.out.format("Sentence count: %d\n", sentenceCount);
+		System.out.format("Average letters per word: %.1f\n", lettersPerWord);
+		System.out.format("Average words per sentence: %.1f\n", wordsPerSentence);
+		
+		fileInput.close();
+		
+	}
+}
